@@ -30,7 +30,7 @@ const footerLinks = [
 
 const Footer = () => {
   return (
-    <footer className="mt-16 flex flex-col items-center gap-8 md:gap-28 xl:gap-54 justify-between rounded-lg bg-gray-800 p-8 md:flex-row md:items-start">
+    <footer className="flex flex-col items-center gap-8 md:gap-28 xl:gap-54 justify-between rounded-lg bg-gray-800 p-8 md:flex-row md:items-start">
       <div className="flex flex-col items-center gap-4 md:items-start">
         <Link href="/" className="flex items-center">
           <Image src="/logo.svg" alt="Logo" width={36} height={36} />
