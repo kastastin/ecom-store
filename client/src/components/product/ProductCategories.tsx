@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Footprints,
   Glasses,
@@ -15,57 +16,71 @@ import { ProductCategory } from "@/types";
 const categories: ProductCategory[] = [
   {
     name: "All",
-    icon: <ShoppingBasket className="size-4" />,
+    icon: ShoppingBasket,
     slug: "all",
   },
   {
     name: "T-shirts",
-    icon: <Shirt className="size-4" />,
+    icon: Shirt,
     slug: "t-shirts",
   },
   {
     name: "Shoes",
-    icon: <Footprints className="size-4" />,
+    icon: Footprints,
     slug: "shoes",
   },
   {
     name: "Accessories",
-    icon: <Glasses className="size-4" />,
+    icon: Glasses,
     slug: "accessories",
   },
   {
     name: "Bags",
-    icon: <Briefcase className="size-4" />,
+    icon: Briefcase,
     slug: "bags",
   },
   {
     name: "Dresses",
-    icon: <Venus className="size-4" />,
+    icon: Venus,
     slug: "dresses",
   },
   {
     name: "Jackets",
-    icon: <Shirt className="size-4" />,
+    icon: Shirt,
     slug: "jackets",
   },
   {
     name: "Gloves",
-    icon: <Hand className="size-4" />,
+    icon: Hand,
     slug: "gloves",
   },
 ];
 
 const ProductCategories = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const selectedCategory = searchParams.get("category") ?? "all";
+
+  const handleChange = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("category", value || "all");
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <div className="grid grid-cols-2 gap-2 rounded-lg bg-gray-100 p-2 text-sm sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
-      {categories.map((category) => (
-        <div
-          key={category.name}
-          className="flex cursor-pointer items-center justify-center gap-2 rounded-md p-2 hover:bg-gray-200"
+      {categories.map(({ name, slug, icon: Icon }) => (
+        <button
+          key={name}
+          type="button"
+          onClick={() => handleChange(slug)}
+          className={`flex cursor-pointer items-center justify-center gap-2 rounded-md p-2 hover:bg-white ${slug === selectedCategory ? "bg-white" : "text-gray-500"}`} // TODO: consider using cn util
         >
-          {category.icon}
-          {category.name}
-        </div>
+          <Icon className="size-4" />
+          <span>{name}</span>
+        </button>
       ))}
     </div>
   );

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
 
 export type ProductType = {
   id: number;
@@ -13,6 +13,6 @@ export type ProductType = {
 
 export type ProductCategory = {
   name: string;
-  icon: ReactNode;
+  icon: LucideIcon;
   slug: string;
 };
