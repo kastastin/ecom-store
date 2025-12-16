@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 import { ProductType } from "@/types";
 import ProductCard from "@/components/product/ProductCard";
+import ProductFilter from "@/components/product/ProductFilter";
 import ProductCategories from "@/components/product/ProductCategories";
 
 const products: ProductType[] = [
@@ -113,16 +116,30 @@ const products: ProductType[] = [
   },
 ];
 
-const ProductList = () => {
+type ProductListProps = {
+  category: string;
+  params: "HomePage" | "ProductsPage";
+};
+
+const ProductList = ({ category, params }: ProductListProps) => {
   return (
-    <div className="w-full mt-4">
+    <div className="w-full">
       <ProductCategories />
 
-      <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 mt-4">
+      {params === "ProductsPage" && <ProductFilter />}
+
+      <div className="mt-4 grid grid-cols-1 gap-12 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+
+      <Link
+        href={category ? `/products/?category=${category}` : "/products"}
+        className="mt-4 flex justify-end text-sm text-gray-500 underline"
+      >
+        View all products
+      </Link>
     </div>
   );
 };

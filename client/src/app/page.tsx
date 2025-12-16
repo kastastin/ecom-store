@@ -2,10 +2,16 @@ import Image from "next/image";
 
 import ProductList from "@/components/product/ProductList";
 
-const HomePage = () => {
+type HomePageProps = {
+  searchParams: Promise<{ category: string }>;
+};
+
+const HomePage = async ({ searchParams }: HomePageProps) => {
+  const category = (await searchParams).category;
+
   return (
-    <div className="flex flex-col w-full">
-      <div className="relative aspect-3/1 size-full">
+    <div className="flex w-full flex-col">
+      <div className="relative mb-4 aspect-3/1 size-full">
         <Image
           src="/featured.png"
           alt="Featured Product"
@@ -14,7 +20,7 @@ const HomePage = () => {
         />
       </div>
 
-      <ProductList />
+      <ProductList params='HomePage' category={category} />
     </div>
   );
 };
